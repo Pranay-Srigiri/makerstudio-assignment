@@ -126,16 +126,15 @@ defmodule MakerstudioAssignmentWeb.UserController do
 
 
   def update_task(%{body_params: params} = conn, %{"user_id" => user_id, "task_id" => task_id}=_params)do
-          case :ets.lookup(:users, user_id) do
+    case :ets.lookup(:users, user_id) do
             [{_user_id,task_list}] ->
 
         task_entry = Enum.find(task_list, fn task ->
-          is_map(task) && Map.has_key?(task, task_id)
-        end)
-        IO.inspect(task_entry, label: "Task Entry")
-
+            is_map(task) && Map.has_key?(task, task_id)
+          end)
         if task_entry do
           to_update_task = Map.get(task_entry, task_id)
+
           {_empty_values, non_empty_values} =
             Enum.reduce(params, {[], []}, fn {key, value}, {empty, non_empty} ->
               case value do
@@ -152,17 +151,12 @@ defmodule MakerstudioAssignmentWeb.UserController do
 
 
           updated_task_list = Enum.map(task_list, fn task ->
-            if Map.has_key?(task, task_id) do
-              Map.put(task, task_id, updated_values)
-            else
-              task
-            end
-          end)
-
-
-          IO.inspect(updated_task_list, label: "Updated Task List")
-
-
+              if Map.has_key?(task, task_id) do
+                Map.put(task, task_id, updated_values)
+              else
+                task
+              end
+            end)
           :ets.insert(:users, {user_id, updated_task_list})
 
           conn
@@ -179,7 +173,6 @@ defmodule MakerstudioAssignmentWeb.UserController do
         |> put_status(404)
         |> json(%{message: "User not found"})
     end
-
   end
 
   defp create_new_task(title, description, duedate, status, task_id) do

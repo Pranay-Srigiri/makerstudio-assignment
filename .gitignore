@@ -35,3 +35,6 @@ makerstudioAssignment-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Environment Variables
+/.env
+

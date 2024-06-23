@@ -27,6 +27,7 @@ defmodule MakerstudioAssignmentWeb.Router do
     post "/users/:user_id/tasks", UserController, :users_tasks
     get "/users/:user_id/tasks", UserController, :get_tasks_by_userid
     get "/users/:user_id/tasks/:task_id", UserController, :get_tasks_by_taskid
+    put "/users/:user_id/tasks/:task_id", UserController, :update_task
     delete "/users/:user_id/tasks/:task_id", UserController, :delete_task
   end
 

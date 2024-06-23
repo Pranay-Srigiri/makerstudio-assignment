@@ -104,6 +104,26 @@ defmodule MakerstudioAssignmentWeb.UserController do
     end
   end
 
+  def delete_task(conn, %{"user_id" => user_id, "task_id" => task_id} = _params) do
+    case :ets.lookup(:users, user_id) do
+      [{_user_id, task_list}] ->
+        updated_task_list = Enum.reject(task_list, fn t -> Map.has_key?(t, task_id) end)
+        :ets.insert(:users, {user_id, updated_task_list})
+        message = %{message: "Task deleted successfully"}
+
+        conn
+        |> put_status(200)
+        |> json(message)
+
+      _ ->
+        message = %{message: "User not found"}
+
+        conn
+        |> put_status(400)
+        |> json(message)
+    end
+  end
+
   defp create_new_task(title, description, duedate, status, task_id) do
     %{
       task_id => %{

@@ -65,7 +65,25 @@ defmodule MakerstudioAssignmentWeb.UserController do
     end
   end
 
-  def create_new_task(title, description, duedate, status, task_id) do
+  def get_tasks_by_userid(conn, %{"user_id" => user_id}) do
+    case :ets.lookup(:users, user_id) do
+      [{_user_id, task_list}] ->
+        data = %{tasks: task_list}
+
+        conn
+        |> put_status(200)
+        |> json(data)
+
+      _ ->
+        message = %{message: "Error retrieving tasks"}
+
+        conn
+        |> put_status(400)
+        |> json(message)
+    end
+  end
+
+  defp create_new_task(title, description, duedate, status, task_id) do
     %{
       task_id => %{
         "title" => title,

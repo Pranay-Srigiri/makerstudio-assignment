@@ -26,6 +26,7 @@ defmodule MakerstudioAssignmentWeb.Router do
     post "/users", UserController, :users
     post "/users/:user_id/tasks", UserController, :users_tasks
     get "/users/:user_id/tasks", UserController, :get_tasks_by_userid
+    get "/users/:user_id/tasks/:task_id", UserController, :get_tasks_by_taskid
   end
 
   # Other scopes may use custom stacks.

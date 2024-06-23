@@ -83,6 +83,27 @@ defmodule MakerstudioAssignmentWeb.UserController do
     end
   end
 
+  def get_tasks_by_taskid(conn, %{"user_id" => user_id, "task_id" => task_id} = _params) do
+    case :ets.lookup(:users, user_id) do
+      [{^user_id, task_list}] ->
+        task = Enum.find(task_list, fn task -> Map.has_key?(task, task_id) end)
+
+        if task do
+          message = %{tasks: task}
+
+          conn
+          |> put_status(200)
+          |> json(message)
+        else
+          message = %{message: "#{task_id} not found!!"}
+
+          conn
+          |> put_status(400)
+          |> json(message)
+        end
+    end
+  end
+
   defp create_new_task(title, description, duedate, status, task_id) do
     %{
       task_id => %{

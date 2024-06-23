@@ -24,6 +24,7 @@ defmodule MakerstudioAssignmentWeb.Router do
     pipe_through :api
 
     post "/users", UserController, :users
+    post "/users/:user_id/tasks", UserController, :users_tasks
   end
 
   # Other scopes may use custom stacks.

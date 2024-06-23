@@ -10,7 +10,8 @@ defmodule MakerstudioAssignment.Application do
     children = [
       MakerstudioAssignmentWeb.Telemetry,
       MakerstudioAssignment.Repo,
-      {DNSCluster, query: Application.get_env(:makerstudioAssignment, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:makerstudioAssignment, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MakerstudioAssignment.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: MakerstudioAssignment.Finch},

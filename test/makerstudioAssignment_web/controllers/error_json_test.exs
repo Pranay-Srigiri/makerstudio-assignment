@@ -2,7 +2,9 @@ defmodule MakerstudioAssignmentWeb.ErrorJSONTest do
   use MakerstudioAssignmentWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert MakerstudioAssignmentWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert MakerstudioAssignmentWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Not Found"}
+           }
   end
 
   test "renders 500" do

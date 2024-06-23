@@ -20,6 +20,12 @@ defmodule MakerstudioAssignmentWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/", MakerstudioAssignmentWeb do
+    pipe_through :api
+
+    post "/users", UserController, :users
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MakerstudioAssignmentWeb do
   #   pipe_through :api

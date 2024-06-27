@@ -7,6 +7,8 @@ defmodule MakerstudioAssignment.Application do
 
   @impl true
   def start(_type, _args) do
+    :ets.new(:users, [:set, :public, :named_table])
+    :ets.new(:usernames, [:set, :public, :named_table])
     children = [
       MakerstudioAssignmentWeb.Telemetry,
       MakerstudioAssignment.Repo,
@@ -20,6 +22,7 @@ defmodule MakerstudioAssignment.Application do
       # Start to serve requests, typically the last entry
       MakerstudioAssignmentWeb.Endpoint
     ]
+
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
